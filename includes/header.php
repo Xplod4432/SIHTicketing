@@ -1,5 +1,7 @@
 <?php 
   include_once 'includes/session.php';
+  require './db/conn.php';
+  $results = $crud->getCities();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +14,6 @@
   <link href="<?php echo $extracss; ?>" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js"></script>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" href="/resources/demos/style.css">
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -38,6 +39,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
   <link href="./css/local.css" rel="stylesheet">
+  <link rel="shortcut icon" href="./includes/logo.ico" type="image/x-icon"/>
+
   <style>
 body {
   font-family: 'Poppins';
@@ -49,8 +52,9 @@ body {
 <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top border-bottom border-2">
   <div class="container-fluid">
   <a class="navbar-brand align-baseline" href="./index.php">
-        <i class="bi bi-laptop-fill d-inline-block align-text-top" alt="" height="38"></i>
-				<span style="color: rgba(227,48,2,1); vertical-align: middle; font-size: 1rem; position: relative;" class="bold px-2">Developer's Den</span>
+        <img src="./images/logo.png" alt="" height="38" class="d-inline-block align-text-top"/>
+				<span style="color: rgba(227,48,2,1); vertical-align: middle; font-size: 1rem; position: relative;
+  bottom: -3px; margin-left: 7px;" class="bold">Digital Vikings</span>
 			</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -60,42 +64,55 @@ body {
         <li class="nav-item">
           <a class="nav-link bold mx-5" aria-current="page" href="./index.php">Home</a>
         </li>
-        <?php if (isset($_SESSION['userid'])){?>
         <li class="nav-item dropdown bold mx-5">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <span>
-              <?php if ($_SESSION['accesslevel'] == 1) { echo "Actions"; }?>
-              <?php if ($_SESSION['accesslevel'] == 0) { echo "Scores"; }?>
+              Browse Cities
             </span>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <?php if ($_SESSION['accesslevel'] == 1) { ?>
-            <li><a class="dropdown-item" href="./newassgn.php">Create Assignment</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="./newtests.php">Create Test</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="./viewassgn.php">View Assignments</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="./viewtests.php">View Tests</a></li>
-            <?php } ?>
-            <?php if ($_SESSION['accesslevel'] == 0) { ?>
-            <li><a class="dropdown-item" href="./assignments.php">Assignments</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="./tests.php">Tests</a></li>
-            <?php } ?>
+            <?php while($r = $results->fetch(PDO::FETCH_ASSOC)) {?>
+              <li><a class="dropdown-item" href="./citwise.php?cityid=<?php echo $r['cityid'] ?>"><?php echo $r['cityname']; ?></a></li>
+              <li><hr class="dropdown-divider"></li>
+            <?php }?>
           </ul>
+          </li>
+        <li class="nav-item mx-5 mb-1">
+        <div class="input-group">
+        <form class="d-flex" action="./search.php" method="get">
+          <input class="form-control me-2 rounded-pill" id="Search" name="Search" type="search" placeholder="Search" aria-label="Search" required>
+            <button class="btn btn-default" type="submit">
+                <span class="fa fa-search"></span>
+            </button>
+        </div>
+          </form>
+      </li>
       </ul>
+      <!-- <?php //if (isset($_SESSION['userid'])){?>
       <ul class="nav navbar-nav ml-auto">
       <li class="nav-item dropdown">
-          <a class="nav-link bold ms-5" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle bold ms-5" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <span>
-              Hello <?php echo $_SESSION['username']?>
+              Hello <?php //echo $_SESSION['username'] ?>
             </span>
           </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#">Create Blog</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">View Blogs</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Event Feedbacks</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Change Password</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">View Queries</a></li>
+          </ul>
         </li>
         <li class="nav-item">
           <a class="bold btn btn-orange-moon rounded-3 ms-5" href="./logout.php">Logout</a>
-        </li><?php } ?></div>
+        </li> -->
+        <?php //}?>
+    </div>
   </div>
 </nav>
 <div class="container">
