@@ -75,6 +75,7 @@ body {
               <li><a class="dropdown-item" href="./citwise.php?cityid=<?php echo $r['cityid'] ?>"><?php echo $r['cityname']; ?></a></li>
               <li><hr class="dropdown-divider"></li>
             <?php }?>
+            <li><a class="dropdown-item" href="./citywise.php">View All</a></li>
           </ul>
           </li>
         <li class="nav-item mx-5 mb-1">

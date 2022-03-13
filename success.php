@@ -1,7 +1,6 @@
 <?php
     $title = 'Success'; 
     require_once 'includes/header.php';
-    require_once './db/conn.php';
     require './includes/sanitise.php';
 
     if(isset($_POST['submit'])){
@@ -9,49 +8,20 @@
         $fname = test_input($_POST['fname']);
         $lname = test_input($_POST['lname']);
         $dob = test_input($_POST['dob']);
-        $username = test_input($_POST['mail']);
+        $email = test_input($_POST['mail']);
         $contact = test_input($_POST['phone']);
-        $course1 = test_input($_POST['course']);
-        $resaddress = test_input($_POST['prefcity']);
+        $tokenauth = test_input($_POST['course']);
+        $cityid = test_input($_POST['prefcity']);
         $password = test_input($_POST['password']);
 
         //Call function to insert and track if success or not
-        $isSuccess = $user->insertUser($fname,$lname,$dob,$username,$password,$contact,$course1,$resaddress);
+        $isSuccess = $user->insertUser($username,$password,$fname,$lname,$contact,$dob,$cityid);
         if($isSuccess){
             include 'includes/successmessage.php';
         }
         else{
             include 'includes/errormessage.php';
         }
-
-        
-
     }
 ?>
-    <!-- This prints out values that were passed to the action page using method="post" -->
-    <img src="<?php echo $destination; ?>" class="rounded-circle" style="width: 20%; height: 20%" />
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">
-                <?php echo $_POST['fname'] . ' ' . $_POST['lname'];  ?>
-            </h5>
-            <p class="card-text">
-                Date Of Birth: <?php echo $_POST['dob'];  ?>
-            </p>
-            <p class="card-text">
-                Email Adress: <?php echo $_POST['mail'];  ?>
-            </p>
-            <p class="card-text">
-                Contact Number: <?php echo $_POST['phone'];  ?>
-            </p>
-    
-        </div>
-    </div>
-    
-
-<br>
-<br>
-<br>
-<br>
-<br>
 <?php require_once 'includes/footer.php'; ?>
