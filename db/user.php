@@ -48,6 +48,24 @@
             }
         }
 
+        public function updateUserDetails($fname,$lname,$phone,$dob,$prefcity,$userid) {
+            try {
+                $sql = "UPDATE `user_details` SET `fname`=:fname,`lname`=:lname,`contactnumber`=:phone,`dateofbirth`=:dob,`prefcity`=:prefcity WHERE `userid`=:userid";
+                $stmt = $this->db->prepare($sql);
+                $stmt->bindparam(':fname',$fname);
+                $stmt->bindparam(':lname',$lname);
+                $stmt->bindparam(':phone',$phone);
+                $stmt->bindparam(':dob',$dob);
+                $stmt->bindparam(':prefcity',$prefcity);
+                $stmt->bindparam(':userid',$userid);
+                $stmt->execute();
+                return true;
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+                return false;
+            }
+        }
+
         public function registerProcessUser($email,$password) {
             try {
                 $result = $this->getUserCountByEmail($email);
