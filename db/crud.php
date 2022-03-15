@@ -71,6 +71,20 @@
             }
         }
 
+        public function getPlaceByID($placeid) {
+            try {
+                $sql = "SELECT * FROM places p INNER JOIN cities c ON p.cityid = c.cityid WHERE `placeid` = :placeid";
+                $stmt = $this->db->prepare($sql);
+                $stmt->bindparam(':placeid', $placeid);
+                $stmt->execute();
+                $result = $stmt->fetch();
+                return $result;
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+                return false;
+            }
+        }
+
         public function buyTicket() {
 
         }

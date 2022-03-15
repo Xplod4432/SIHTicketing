@@ -1,5 +1,5 @@
 <?php
-    $title = 'Success'; 
+    $title = 'Registration Successful'; 
     require_once 'includes/header.php';
     require './includes/sanitise.php';
 

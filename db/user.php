@@ -125,6 +125,20 @@
             }
         }
 
+        public function getUserByUserID($uid){
+            try {
+                $sql = "select * from user_details where userid = :userid";
+                $stmt = $this->db->prepare($sql);
+                $stmt->bindparam(':userid', $uid);
+                $stmt->execute();
+                $result = $stmt->fetch();
+                return $result;
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+                return false;
+            }
+        }
+
         // public function getUserDetails($userid){
         //     try {
         //         $sql = "select * from user_details where id = :userid";
