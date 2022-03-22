@@ -1,5 +1,5 @@
 <?php
     if(!($_SESSION['accesslevel'] == 3)){
-        header("Location: index.php");
+        header("Location: adminlogin.php");
     }
 ?>

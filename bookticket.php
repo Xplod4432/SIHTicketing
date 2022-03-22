@@ -20,7 +20,7 @@
             <label for="visitorcount" class="form-label">Number of Visitors</label>
             <input required type="text" class="form-control" id="visitorcount" name="visitorcount"></input>
         </div>
-        <input required type="hidden" id="placeid" name="placeid" value="<?php echo $_GET[pid]; ?>"></input>
+        <input required type="hidden" id="placeid" name="placeid" value="<?php echo $_GET['pid']; ?>"></input>
         <div class="py-3">
         <button type="submit" name="submit" class="btn btn-primary">Submit</button>
         </div>

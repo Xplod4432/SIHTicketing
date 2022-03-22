@@ -1,3 +1,7 @@
 tovisit.txt
 db/ticket_db.sql
 extrafunctions.php
+payment/razorpay/payscript.php
+payment/razorpay/checkout.php
+payment/rzp.csv
+payment/razorpay-php.zip
