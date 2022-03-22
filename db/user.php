@@ -6,13 +6,13 @@
             $this->db = $conn;
         }
 
-        public function insertUser($email,$password,$fname,$lname,$contact,$dob,$cityid,$token){
+        public function insertUser($email,$password,$fname,$lname,$contact,$dob,$cityid){
             try {
-                if (!validateToken($token,$email)) {    //assigned to Narahari
-                    echo "Verification failed, please try again";
-                    return false;
-                }
-                else{
+                // if (!validateToken($token,$email)) {    //assigned to Narahari
+                //     echo "Verification failed, please try again";
+                //     return false;
+                // }
+                // else{
                     $sql = "INSERT INTO user_details (emailaddress,password,fname,lname,contactnumber,dateofbirth,prefcity) VALUES (:email,:password,:fname,:lname,:contact,:dob,:cityid)";
                     $stmt = $this->db->prepare($sql);
                     $stmt->bindparam(':email',$email);
@@ -24,7 +24,7 @@
                     $stmt->bindparam(':cityid',$cityid);
                     $stmt->execute();
                     return true;
-                }
+                //}
                 
         
             } catch (PDOException $e) {
@@ -35,9 +35,9 @@
 
         public function getUser($username,$hashed_password){
             try{
-                $sql = "select * from userdetails where username = :username AND password = :password";
+                $sql = "select * from user_details where emailaddress = :email AND password = :password";
                 $stmt = $this->db->prepare($sql);
-                $stmt->bindparam(':username', $username);
+                $stmt->bindparam(':email', $username);
                 $stmt->bindparam(':password', $hashed_password);
                 $stmt->execute();
                 $result = $stmt->fetch();
@@ -66,30 +66,30 @@
             }
         }
 
-        public function registerProcessUser($email,$password) {
-            try {
-                $result = $this->getUserCountByEmail($email);
-                    if($result['num'] > 0){
-                        echo "E-Mail already Registered";
-                        return false;
-                    }
-                    else{
-                        $new_password = md5($password.$email);
-                        //$token = generateToken();
-                        //assigned to Narahari
-                        $sql = "INSERT INTO reg_process_users (emailid,password,token) VALUES (:email,:password,:token)";
-                        $stmt->bindparam(':email',$email);
-                        $stmt->bindparam(':password',$password);
-                        $stmt->bindparam(':token',$token);
-                        $stmt->execute();
-                        echo "Check email for the verfication link/OTP";
-                        return true;
-                    }
-            } catch (PDOException $e) {
-                echo $e->getMessage();
-                return false;
-            }
-        }
+        // public function registerProcessUser($email,$password) {
+        //     try {
+        //         $result = $this->getUserCountByEmail($email);
+        //             if($result['num'] > 0){
+        //                 echo "E-Mail already Registered";
+        //                 return false;
+        //             }
+        //             else{
+        //                 $new_password = hash('SHA512',$password.$email);
+        //                 //$token = generateToken();
+        //                 //assigned to Narahari
+        //                 $sql = "INSERT INTO reg_process_users (emailid,password,token) VALUES (:email,:password,:token)";
+        //                 $stmt->bindparam(':email',$email);
+        //                 $stmt->bindparam(':password',$password);
+        //                 $stmt->bindparam(':token',$token);
+        //                 $stmt->execute();
+        //                 echo "Check email for the verfication link/OTP";
+        //                 return true;
+        //             }
+        //     } catch (PDOException $e) {
+        //         echo $e->getMessage();
+        //         return false;
+        //     }
+        // }
 
         public function getUserCountByEmail($email){
             try{

@@ -4,7 +4,7 @@
     require_once './includes/auth_check.php';
 
     if(isset($_POST['submit'])){
-        $userresult = $crud->getUserByUserID($_SESSION['userid']);
+        $userresult = $user->getUserByUserID($_SESSION['userid']);
         $dov = $_POST['dov'];
         $visitorcount = $_POST['visitorcount'];
         $placeid = $_POST['placeid'];
@@ -21,7 +21,7 @@
         </div>
         <div class="mb-3">
             <label for="number" class="form-label">Contact Number</label>
-            <input required type="text" class="form-control" id="number" name="number" value="<?php echo $userresult['contactnumber'] . ' ' . $userresult['contactnumber'] ;?>" readonly="readonly"></input>
+            <input required type="text" class="form-control" id="number" name="number" value="<?php echo $userresult['contactnumber'];?>" readonly="readonly"></input>
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">E-Mail</label>

@@ -2,6 +2,7 @@
     $title = "Create Blog";
     require_once './includes/header.php';
     require_once './includes/auth_check.php';
+    require_once './includes/sanitise.php';
 
     if(!isset($_GET['pid'])){
         include './includes/errormessage.php';

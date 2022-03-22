@@ -42,14 +42,32 @@
             }
         }
 
+        public function getAllPlaces() {
+            try{
+                $sql = "SELECT * FROM `places`";
+                $result = $this->db->query($sql);
+                return $result;
+            }catch (PDOException $e) {
+                echo $e->getMessage();
+                return false;
+            }
+        }
+
         public function displayAreaWise($cityid) {
             try{
                 $sql = "SELECT * FROM places WHERE cityid = :cityid";
                 $stmt = $this->db->prepare($sql);
                 $stmt->bindparam(':cityid', $cityid);
                 $stmt->execute();
-                $result = $stmt->fetch();
-                return $result;
+                while ($r = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $card_src = $r['imagepath'];
+                    $card_title = $r['placename'];
+                    $card_address = $r['placeaddress'];
+                    $card_href = $r['placeid'];
+                    $card_rating = $r['rating'];
+                    $card_text = $r['description'];
+                    include "./includes/scards.php";
+                }
             }catch (PDOException $e) {
                 echo $e->getMessage();
                 return false;
@@ -156,8 +174,19 @@
         </table>
         */
 
-        public function sendTicketMail() {
-            
+        public function getCarousel() {
+            try {
+                $sql = "SELECT * FROM places p ORDER BY placeid DESC LIMIT 3;";
+                $result = $this->db->query($sql);
+                return $result;
+            }catch (PDOException $e) {
+                echo $e->getMessage();
+                return false;
+            }
         }
+
+        // public function sendTicketMail() {
+            
+        // }
     }
 ?>

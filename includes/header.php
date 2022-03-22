@@ -28,10 +28,8 @@
 			});
 		} );
     $( function() {
-			$( "#lastdate" ).datepicker({
-			changeMonth: true,
-			changeYear: true,
-			yearRange: "-0:+4",
+			$( "#dov" ).datepicker({
+			yearRange: "-0:+1",
 			dateFormat: "yy-mm-dd"
 			});
 		} );
@@ -72,12 +70,11 @@ body {
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <?php while($r = $results->fetch(PDO::FETCH_ASSOC)) {?>
-              <li><a class="dropdown-item" href="./citwise.php?cityid=<?php echo $r['cityid'] ?>"><?php echo $r['cityname']; ?></a></li>
+              <li><a class="dropdown-item" href="./citywise.php?cityid=<?php echo $r['cityid'] ?>"><?php echo $r['cityname']; ?></a></li>
               <li><hr class="dropdown-divider"></li>
-            <?php }?>
-            <li><a class="dropdown-item" href="./citywise.php">View All</a></li>
+            <?php } ?>
           </ul>
-          </li>
+        </li>
         <li class="nav-item mx-5 mb-1">
         <div class="input-group">
         <form class="d-flex" action="./search.php" method="get">
@@ -89,30 +86,37 @@ body {
           </form>
       </li>
       </ul>
-      <!-- <?php //if (isset($_SESSION['userid'])){?>
+      <?php if (!isset($_SESSION['userid'])) {?>
+      <ul class="nav navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="bold btn btn-orange-moon rounded-3 ms-5" href="./login.php">Login</a>
+        </li>
+      </ul>
+      <?php } ?>
+      <?php if (isset($_SESSION['userid'])){?>
       <ul class="nav navbar-nav ml-auto">
       <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle bold ms-5" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <span>
-              Hello <?php //echo $_SESSION['username'] ?>
+              Hello <?php echo $_SESSION['fname'] ?>
             </span>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Create Blog</a></li>
+            <li><a class="dropdown-item" href="./citywise.php?cityid=<?php echo $_SESSION["prefcity"]; ?>">Book Tickets</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">View Blogs</a></li>
+            <li><a class="dropdown-item" href="./viewTickets.php">View Bookings</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Event Feedbacks</a></li>
+            <!-- <li><a class="dropdown-item" href="./eventview.php">Event Feedbacks</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Change Password</a></li>
+            <li><a class="dropdown-item" href="./changepwd.php">Change Password</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">View Queries</a></li>
+            <li><a class="dropdown-item" href="./queryview.php">View Queries</a></li> -->
           </ul>
         </li>
         <li class="nav-item">
           <a class="bold btn btn-orange-moon rounded-3 ms-5" href="./logout.php">Logout</a>
-        </li> -->
-        <?php //}?>
+        </li>
+        <?php }?></div>
     </div>
   </div>
 </nav>
