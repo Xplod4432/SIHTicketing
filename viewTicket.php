@@ -1,9 +1,8 @@
 <?php 
     $title = "View Ticket";
     require './includes/header.php';
-    require './includes/authckeck.php';
+    require './includes/auth_check.php';
     $ticketresult = $crud->fetchTicket($_GET['tid'], $_SESSION['userid']);
-    if(!$ticketresult) {
 ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
@@ -18,41 +17,34 @@
     text-align: center;
   }  
   td, th, button {  
-    border: 1px solid #dddddd;  
+    border-: ;  
     text-align: left;  
     padding: 8px;  
   }  
   button {  
     border: 1px solid black;   
   } 
-  tr:nth-child(even) {  
-    background-color: #dddddd;  
-  }  
 </style>  
 <div id="htmlContent">
   <h2 style="color: #0094ff">Ticket Details</h2>  
-  <h3><strong>Ticket ID:</strong> <?php echo $ticketResult['tid']; ?></h3>  
+  <h3><strong>Ticket ID:</strong> <?php echo $ticketresult['ticketid']; ?></h3>  
   <table>  
     <tbody>  
       <tr>  
-        <th>Person</th>  
-        <th>Contact</th>  
-        <th>Country</th>  
+        <th>Name</th>  
+        <td><?php echo $ticketresult['fname'] . " " . $ticketresult['lname']; ?></td>
       </tr>  
       <tr>  
-        <td>John</td>  
-        <td>+2345678910</td>  
-        <td>Germany</td>  
+        <th>Place</th>  
+        <td><?php echo $ticketresult['placename']; ?></td>
       </tr>  
       <tr>  
-        <td>Jacob</td>  
-        <td>+1234567890</td>  
-        <td>Mexico</td>  
+        <th>Number of Visitors</th>  
+        <td><?php echo $ticketresult['numberofvisitors']; ?></td>
       </tr>  
       <tr>  
-        <td>Eleven</td>  
-        <td>+91234567802</td>  
-        <td>Austria</td>  
+        <th>Date of Visit</th>  
+        <td><?php echo $ticketresult['dateofvisit']; ?></td>
       </tr>  
     </tbody>  
   </table>    
@@ -82,6 +74,5 @@ $('#generatePDF').click(function () {
 });
 </script>
 <?php
-    }
   include 'includes/footer.php'
 ?>
